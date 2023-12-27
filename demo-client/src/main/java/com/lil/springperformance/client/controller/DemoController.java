@@ -1,5 +1,8 @@
 package com.lil.springperformance.client.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lil.springperformance.client.domain.CpuLoader;
 import com.lil.springperformance.client.domain.DemoPayload;
 import com.lil.springperformance.client.repository.DeviceRepository;
@@ -18,8 +21,8 @@ public class DemoController {
 
     private static Logger logger = LoggerFactory.getLogger(DemoController.class);
     
-    private final String QUOTER_API = "https://quoters.apps.pcfone.io/api/random";
-
+    private final String QUOTER_API = "https://api.quotable.io/quotes/random";
+    
     private final String DEMO_API = "http://localhost:9092";
 
     @Autowired
@@ -58,9 +61,12 @@ public class DemoController {
     }
 
     @GetMapping("/quoter")
-    public String getQuoter() {
-        Quote quote = restTemplate.getForObject(
-                QUOTER_API, Quote.class);
+    public String getQuoter() throws JsonMappingException, JsonProcessingException {
+    	String response = restTemplate.getForObject(QUOTER_API, String.class);			
+        ObjectMapper mapper = new ObjectMapper();	        
+        Quote[] quotes = mapper.readValue(response, Quote[].class);
+        Quote quote = quotes[0]; // get the first element
+        
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) { }
