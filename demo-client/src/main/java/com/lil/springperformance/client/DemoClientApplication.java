@@ -33,7 +33,7 @@ public class DemoClientApplication {
 		// Below lines require JVM parameters in order to run. This is covered in lesson
 		// 03_03.
 		BufferingApplicationStartup bas = new BufferingApplicationStartup(10000);
-		bas.addFilter(startupStep -> startupStep.getName().startsWith("spring.beans.instantiate"));
+		bas.addFilter(startupStep -> startupStep.getName().startsWith("spring.boot"));
 		
 		demoApplication.setApplicationStartup(bas);		
 		demoApplication.run(args);
