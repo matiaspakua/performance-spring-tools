@@ -23,8 +23,8 @@ public class DemoApiApplication {
 		DemoProperties props = (DemoProperties) context.getBean("appProperties");
 		SpringApplication demoApplication = new SpringApplication(DemoApiApplication.class);
 		//Below lines require JVM parameters in order to run. This is covered in lesson 03_03.
-		//FlightRecorderApplicationStartup frs = new FlightRecorderApplicationStartup();
-		//demoApplication.setApplicationStartup(frs);
+		FlightRecorderApplicationStartup frs = new FlightRecorderApplicationStartup();
+		demoApplication.setApplicationStartup(frs);
 		demoApplication.run(args);
 		logger.info("Open this application in your browser at http://localhost:" + props.getRuntimeProperties().getProperty("server.port", ""));
 		context.close();
